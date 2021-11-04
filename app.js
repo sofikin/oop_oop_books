@@ -2,8 +2,18 @@ const form = document.querySelector("form");
 const titleInput = document.querySelector("#title");
 const authorInput = document.querySelector("#author");
 const isbnInput = document.querySelector("#isbn");
+const booksList = document.querySelector(".books");
 
 form.addEventListener("submit", addBook);
+booksList.addEventListener("click", deleteBook);
+
+function deleteBook(e) {
+  if (e.target.textContent == "X") {
+    if (confirm("Do you want to delete this book?")) {
+      e.target.parentElement.parentElement.remove();
+    }
+  }
+}
 
 function addBook(e) {
   // input values
@@ -31,6 +41,16 @@ function addBook(e) {
   tr.appendChild(td1);
   tr.appendChild(td2);
   tr.appendChild(td3);
+  // create link element
+  const link = document.createElement("a");
+  // set href attribute
+  link.setAttribute("href", "#");
+  // add css style
+  link.className = "secondary-content";
+  // add X text to link
+  link.appendChild(document.createTextNode("X"));
+  // add link to <td3>
+  td3.appendChild(link);
   // find tbody DOM component
   const tbody = document.querySelector("tbody");
   // move <tr> to <tbody>
