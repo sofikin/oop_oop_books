@@ -11,8 +11,26 @@ function deleteBook(e) {
   if (e.target.textContent == "X") {
     if (confirm("Do you want to delete this book?")) {
       e.target.parentElement.parentElement.remove();
+      let book = e.target.parentElement.parentElement.textContent;
+      deleteBookFromLocalStorage(book);
+      console.log(book);
     }
   }
+}
+
+function deleteBookFromLocalStorage(book) {
+  let books;
+  if (localStorage.getItem("books") === null) {
+    books = [];
+  } else {
+    books = JSON.parse(localStorage.getItem("books"));
+  }
+  books.forEach(function (booksElement, index) {
+    if (booksElement === book) {
+      books.splice(index, 1);
+    }
+  });
+  localStorage.setItem("books", JSON.stringify(books));
 }
 
 function addBook(e) {
@@ -74,8 +92,6 @@ function addBookToLocalStorage(book) {
   } else {
     books = JSON.parse(localStorage.getItem("books"));
   }
-  console.log(books);
   books.push(book);
   localStorage.setItem("books", JSON.stringify(books));
-  console.log(books);
 }
