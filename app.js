@@ -55,10 +55,27 @@ function addBook(e) {
   const tbody = document.querySelector("tbody");
   // move <tr> to <tbody>
   tbody.appendChild(tr);
+  // make an array containing book info
+  const book = [title, author, isbn];
+  //save a book
+  addBookToLocalStorage(book);
   // clear input values
   titleInput.value = "";
   authorInput.value = "";
   isbnInput.value = "";
   // form submit event control
   e.preventDefault();
+}
+
+function addBookToLocalStorage(book) {
+  let books;
+  if (localStorage.getItem("books") === null) {
+    books = [];
+  } else {
+    books = JSON.parse(localStorage.getItem("books"));
+  }
+  console.log(books);
+  books.push(book);
+  localStorage.setItem("books", JSON.stringify(books));
+  console.log(books);
 }
