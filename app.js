@@ -1,5 +1,6 @@
 // project objects
 const ui = new UI();
+const ls = new LS();
 // event elements
 const form = document.querySelector("form");
 // const booksList = document.querySelector(".books");
@@ -8,23 +9,25 @@ const form = document.querySelector("form");
 form.addEventListener("submit", addBook);
 
 function addBook(event) {
-  // get form input data
-  const titleInput = document.querySelector("#title");
-  const authorInput = document.querySelector("#author");
-  const isbnInput = document.querySelector("#isbn");
+    // get form input data
+    const titleInput = document.querySelector("#title");
+    const authorInput = document.querySelector("#author");
+    const isbnInput = document.querySelector("#isbn");
 
-  let title = titleInput.value;
-  let author = authorInput.value;
-  let isbn = isbnInput.value;
+    let title = titleInput.value;
+    let author = authorInput.value;
+    let isbn = isbnInput.value;
 
-  // create book by Book class
-  const book = new Book(title, author, isbn);
-  // add book by ui object addBook
-  ui.addBook(book);
+    // create book by Book class
+    const book = new Book(title, author, isbn);
+    // add book by ui object addBook
+    ui.addBook(book);
+    // add book by ls object addBook method
+    ls.addBook(book);
 
-  // save book
-  titleInput.value = "";
-  authorInput.value = "";
-  isbnInput.value = "";
-  event.preventDefault();
+    // save book
+    titleInput.value = "";
+    authorInput.value = "";
+    isbnInput.value = "";
+    event.preventDefault();
 }
