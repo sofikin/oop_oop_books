@@ -7,27 +7,35 @@ const form = document.querySelector("form");
 
 // events
 form.addEventListener("submit", addBook);
+document.addEventListener("DOMContentLoaded", getBooks);
+
+function getBooks() {
+  const books = ls.getData("books");
+  books.forEach(function (book) {
+    ui.addBook(book);
+  });
+}
 
 function addBook(event) {
-    // get form input data
-    const titleInput = document.querySelector("#title");
-    const authorInput = document.querySelector("#author");
-    const isbnInput = document.querySelector("#isbn");
+  // get form input data
+  const titleInput = document.querySelector("#title");
+  const authorInput = document.querySelector("#author");
+  const isbnInput = document.querySelector("#isbn");
 
-    let title = titleInput.value;
-    let author = authorInput.value;
-    let isbn = isbnInput.value;
+  let title = titleInput.value;
+  let author = authorInput.value;
+  let isbn = isbnInput.value;
 
-    // create book by Book class
-    const book = new Book(title, author, isbn);
-    // add book by ui object addBook
-    ui.addBook(book);
-    // add book by ls object addBook method
-    ls.addBook(book);
+  // create book by Book class
+  const book = new Book(title, author, isbn);
+  // add book by ui object addBook
+  ui.addBook(book);
+  // add book by ls object addBook method
+  ls.addBook(book);
 
-    // save book
-    titleInput.value = "";
-    authorInput.value = "";
-    isbnInput.value = "";
-    event.preventDefault();
+  // save book
+  titleInput.value = "";
+  authorInput.value = "";
+  isbnInput.value = "";
+  event.preventDefault();
 }
