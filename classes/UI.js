@@ -21,7 +21,7 @@ class UI {
 
   addBook(book) {
     // create <tr> element
-    const tr = this.addUIElement("tr");
+    const tr = this.addUIElement("tr", "newBook");
     for (let key in book) {
       // create <td> element
       let td = this.addUIElement("td", "", book[key], {});
@@ -40,5 +40,13 @@ class UI {
     // add tr to tbody
     const booksList = document.querySelector(".books");
     booksList.appendChild(tr);
+  }
+
+  deleteBook(target) {
+    // let td =
+    // td.parentElement.remove();
+    if (target.tagName === "a") {
+      target.parentElement.parentElement.remove();
+    }
   }
 }
