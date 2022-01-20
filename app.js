@@ -1,63 +1,52 @@
-// project objects
-const ui = new UI();
-const ls = new LS();
-// event elements
-const form = document.querySelector("form");
-const booksList = document.querySelector(".books");
+// app objects
+const ui = new UI()
+const ls = new LS()
 
-// events
-form.addEventListener("submit", addBook);
-document.addEventListener("DOMContentLoaded", getBooks);
-booksList.addEventListener("click", deleteBook);
+// user input form
+const form = document.querySelector('#book-form');
+form.addEventListener('submit', addBook);
 
-function getBooks() {
-  const books = ls.getData("books");
-  books.forEach(function (book) {
-    ui.addBook(book);
-  });
+// page reload
+document.addEventListener('DOMContentLoaded', getBooks);
+
+// books table click event
+bookList = document.querySelector('#books')
+bookList.addEventListener('click', deleteBook)
+
+function deleteBook(event){
+  if(event.target.textContent === 'X'){
+    const book = ui.getBook(event.target)
+    if(ui.deleteBook(event.target) === true){
+      ls.deleteBook(book)
+    }
+  }
 }
 
-function addBook(event) {
-  // get form input data
-  const titleInput = document.querySelector("#title");
-  const authorInput = document.querySelector("#author");
-  const isbnInput = document.querySelector("#isbn");
-
-  let title = titleInput.value;
-  let author = authorInput.value;
-  let isbn = isbnInput.value;
-
-  // create book by Book class
-  const book = new Book(title, author, isbn);
-  // add book by ui object addBook
-  ui.addBook(book);
-  // add book by ls object addBook method
-  ls.addBook(book);
-
-  // save book
-  titleInput.value = "";
-  authorInput.value = "";
-  isbnInput.value = "";
-  event.preventDefault();
+function getBooks(){
+  // get data from LS
+  const books = ls.getData('books')
+  // for each book in books
+  books.forEach(function (booksFromLS){
+    ui.addBook(booksFromLS)
+  })
 }
 
-function deleteBook(event) {
-  // get form input data
-  const titleInput = document.querySelector("#title");
-  const authorInput = document.querySelector("#author");
-  const isbnInput = document.querySelector("#isbn");
-
-  const newBook = document.querySelector("#newBook");
-
-  let title = titleInput.value;
-  let author = authorInput.value;
-  let isbn = isbnInput.value;
-
-  // create book by Book class
-  const book = new Book(title, author, isbn);
-  // add book by ui object addBook
-  ui.deleteBook(newBook);
-  // add book by ls object addBook method
-  ls.deleteBook(newBook);
-  event.preventDefault();
+// addBook function
+function addBook(event){
+  // get form data from form input
+  const title = ui.title.value
+  const author = ui.author.value
+  const isbn = ui.isbn.value
+  // create book object with user data
+  const book = new Book(title, author, isbn)
+  console.log(book)
+  // add book data to ui and show it
+  ui.addBook(book)
+  // save book data to ls
+  ls.addBook(book)
+  // clear form input value
+  ui.title.value = ''
+  ui.author.value = ''
+  ui.isbn.value = ''
+  event.preventDefault()
 }

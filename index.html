@@ -24,7 +24,7 @@
                 <div class="card-content">
                     <h4>Add Book</h4>
                     <div class="row">
-                        <form class="col s12">
+                        <form class="col s12" id="book-form">
                             <div class="row">
                                 <div class="input-field col s7">
                                     <input id="title" type="text"/>
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="input-field col s7">
                                     <input id="isbn" type="text"/>
-                                    <label for="isbn">ISBN#</label>
+                                    <label for="isbn">ISBN</label>
                                 </div>
                             </div>
 
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div>
-                    <table class="highlight responsive-table books">
+                    <table class="highlight responsive-table books" id="books">
                         <thead>
                         <tr>
                             <th>Title</th>

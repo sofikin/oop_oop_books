@@ -1,52 +1,33 @@
 class UI {
-  // help function for creating DOM elements
-  addUIElement(tagname, classname = "", textcontent = "", attributes = {}) {
-    // create element
-    const element = document.createElement(tagname);
-    // set css class
-    if (classname !== "") {
-      element.className = classname;
-    }
-    // set text content
-    let text = document.createTextNode(textcontent);
-    element.appendChild(text);
-    // attributes
-    if (Object.keys(attributes).length > 0) {
-      for (let key in attributes) {
-        element.setAttribute(key, attributes[key]);
-      }
-    }
-    return element;
+  constructor() {
+    this.title = document.querySelector('#title')
+    this.author = document.querySelector('#author')
+    this.isbn = document.querySelector('#isbn')
+    this.bookList = document.querySelector('#books')
+  }
+  addBook(book){
+    const tr = document.createElement('tr')
+    tr.innerHTML = `<td>${book.title}</td>
+                <td>${book.author}</td>
+                <td>${book.isbn}</td>
+                <td><a href="#">X</a></td>`
+    this.bookList.appendChild(tr)
   }
 
-  addBook(book) {
-    // create <tr> element
-    const tr = this.addUIElement("tr", "newBook");
-    for (let key in book) {
-      // create <td> element
-      let td = this.addUIElement("td", "", book[key], {});
-      // add td to tr
-      tr.appendChild(td); // add td to tr
-    }
-    // X link
-    // create <td> element
-    let td = this.addUIElement("td");
-    // create <a> element
-    const link = this.addUIElement("a", "", "X", { href: "#" });
-    // add <a> to <li>
-    td.appendChild(link);
-    // add td to tr
-    tr.appendChild(td);
-    // add tr to tbody
-    const booksList = document.querySelector(".books");
-    booksList.appendChild(tr);
+  getBook(click){
+    let isbn = click.parentElement.previousElementSibling.textContent
+    let author = click.parentElement.previousElementSibling.previousElementSibling.textContent
+    let title = click.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent
+    const book = new Book(title, author, isbn)
+    return book
   }
 
-  deleteBook(target) {
-    // let td =
-    // td.parentElement.remove();
-    if (target.tagName === "a") {
-      target.parentElement.parentElement.remove();
+  deleteBook(click){
+    if(confirm('Do you really want to delete this book?')) {
+      click.parentElement.parentElement.remove()
+      return true
+    } else {
+      return false
     }
   }
 }
